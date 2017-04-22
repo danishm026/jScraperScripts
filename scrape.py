@@ -5,7 +5,7 @@ import json
 
 OUTPUT_DIRECTORY = os.environ['SCRAPER_OUTPUT_DIRECTORY']
 SCRAPE_COMMAND = 'java -Doutput.directory=' + OUTPUT_DIRECTORY + ' -cp uber-jScraper-0.0.1-SNAPSHOT.jar com.arc.jScraper.main.Main '
-DOWNLOAD_COMMAND = 'wget -U="" '
+DOWNLOAD_COMMAND = 'wget -U="" --continue '
 MODEL_PAGES = 'modelPages'
 IMAGE_DATA_LIST = 'imageDataList'
 IMAGE_URL = 'imageUrl'
@@ -41,7 +41,8 @@ def download_images(model_name, image_urls):
     file_name = "_".join(model_name.strip().split())
     os.chdir(os.path.join(OUTPUT_DIRECTORY, file_name))
     for image_url in image_urls:
-        os.system(DOWNLOAD_COMMAND + image_url)
+        if image_url is not None:
+            os.system(DOWNLOAD_COMMAND + '"' + image_url + '"')
     os.chdir(current_directory)
 
 
